@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>Threat Lens Prototype</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="grid-background"></div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              d="M12 3L19 6V11C19 16 15.5 19.5 12 21C8.5 19.5 5 16 5 11V6L12 3"
+            ></path>
+            <path d="M9 12L11 14L15 10"></path>
+          </svg>
+        </div>
+
+        <div>
+          <p class="eyebrow">THREAT LENS PROTOTYPE</p>
+          <h1>Multi-Email Scanner</h1>
+        </div>
+      </div>
+
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        <span id="nodeStatus">READY</span>
+      </div>
+    </header>
+
+    <section class="selection-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">GMAIL BATCH SELECTION</p>
+          <h2>Select 5–25 emails</h2>
+        </div>
+
+        <button
+          id="refreshButton"
+          class="icon-button"
+          type="button"
+          title="Refresh Gmail selection"
+          aria-label="Refresh Gmail selection"
+        >
+          ↻
+        </button>
+      </div>
+
+      <p class="instruction">
+        Gmail inbox mein email checkboxes select karo. Threat Lens unhe ek batch
+        mein analyze karke har email ka separate result banayega.
+      </p>
+
+      <div class="selection-count-row">
+        <div>
+          <span id="selectedCount" class="selection-count">0</span>
+          <span class="selection-total">selected</span>
+        </div>
+
+        <span id="selectionStatus" class="selection-badge waiting">
+          Minimum 5 required
+        </span>
+      </div>
+
+      <div id="selectionPreview" class="selection-preview"></div>
+    </section>
+
+    <section id="errorBox" class="error-box hidden"></section>
+
+    <button
+      id="batchAnalyzeButton"
+      class="primary-button"
+      type="button"
+      disabled
+    >
+      <span id="spinner" class="spinner hidden"></span>
+      <span id="batchButtonText">Analyze Selected Emails</span>
+    </button>
+
+    <button
+      id="singleAnalyzeButton"
+      class="secondary-button"
+      type="button"
+    >
+      Analyze One Open Email
+    </button>
+
+    <section id="reportCard" class="report-card hidden">
+      <div class="report-header">
+        <div>
+          <p class="eyebrow">CONSOLIDATED REPORT</p>
+          <h2>Batch Threat Summary</h2>
+          <p id="reportMeta" class="report-meta"></p>
+        </div>
+
+        <button
+          id="downloadButton"
+          class="export-button"
+          type="button"
+        >
+          Export JSON
+        </button>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span>Total</span>
+          <strong id="totalCount">0</strong>
+        </div>
+
+        <div class="summary-item high">
+          <span>High</span>
+          <strong id="highCount">0</strong>
+        </div>
+
+        <div class="summary-item suspicious">
+          <span>Suspicious</span>
+          <strong id="suspiciousCount">0</strong>
+        </div>
+
+        <div class="summary-item safe">
+          <span>Low</span>
+          <strong id="lowCount">0</strong>
+        </div>
+
+        <div class="summary-item average">
+          <span>Average</span>
+          <strong id="averageScore">0</strong>
+        </div>
+      </div>
+
+      <div id="reportList" class="report-list"></div>
+    </section>
+
+    <button
+      id="dashboardButton"
+      class="dashboard-button"
+      type="button"
+    >
+      Open Threat Lens Dashboard
+    </button>
+
+    <p class="footer-note">
+      Selected Gmail rows provide sender, subject and visible snippet evidence.
+    </p>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
