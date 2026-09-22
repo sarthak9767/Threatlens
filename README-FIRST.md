@@ -70,3 +70,39 @@ Gmail list rows expose the sender, subject, date, and visible message snippet.
 The batch feature analyzes that visible evidence. For full headers and full body
 evidence, use the existing single open-email mode or submit `.eml` content in
 the dashboard.
+
+## Deploy the backend on Render
+
+The repository includes `render.yaml` with the backend deployment settings.
+
+1. Push the latest project changes to GitHub.
+2. In Render, create a new Blueprint and connect this repository.
+3. Deploy the `threatlens-api` web service.
+4. Verify `https://<your-render-service>.onrender.com/health` returns
+   `{"status":"healthy"}`.
+
+If you create the Render web service manually instead, use:
+
+- Root Directory: `Backend`
+- Build Command: `pip install -r requirements.txt`
+- Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- Health Check Path: `/health`
+
+## Deploy the frontend on Vercel
+
+1. Import the same GitHub repository into Vercel.
+2. Set the Root Directory to `Frontend`.
+3. Add `VITE_API_BASE_URL` with the Render backend URL and no trailing slash.
+4. Deploy and test a manual analysis and an `.eml` upload.
+
+The frontend includes `vercel.json`, so Vercel uses `npm run build` and
+publishes the Vite `dist` directory.
+
+## Connect the unpacked Chrome extension
+
+After the Render backend is live:
+
+1. Replace `DEFAULT_BACKEND` in `Extension/service-worker.js` with the Render
+   backend URL.
+2. Replace `DASHBOARD_URL` in `Extension/popup/popup.js` with the Vercel URL.
+3. Reload the unpacked extension from `chrome://extensions`.
