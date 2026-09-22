@@ -1,32 +1,27 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
+
+
+function loadAnalysisHistory() {
+  try {
+    const saved =
+      localStorage.getItem("analysisHistory")
+
+    return saved
+      ? JSON.parse(saved)
+      : []
+  } catch (error) {
+    console.error(
+      "Failed to load history:",
+      error
+    )
+
+    return []
+  }
+}
 
 function HistoryPage({ onBack }) {
-  const [history, setHistory] = useState([])
+  const [history, setHistory] = useState(loadAnalysisHistory)
   const [selectedRecord, setSelectedRecord] = useState(null)
-
-  // ==========================================
-  // LOAD HISTORY
-  // ==========================================
-
-  useEffect(() => {
-    try {
-      const saved =
-        localStorage.getItem("analysisHistory")
-
-      const parsedHistory = saved
-        ? JSON.parse(saved)
-        : []
-
-      setHistory(parsedHistory)
-    } catch (error) {
-      console.error(
-        "Failed to load history:",
-        error
-      )
-
-      setHistory([])
-    }
-  }, [])
 
   // ==========================================
   // DELETE ONE
